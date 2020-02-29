@@ -11,7 +11,30 @@
 #define F first
 #define S second
 using namespace std;
-
+int best(int n,int x,int y){
+	if(x+y-n>0){
+		return x+y-n+1;
+	}
+	return 1;
+}
+int worst(int n,int x,int y){
+	int rank=1;
+	if(n-x<=y-1){
+		rank+=min(y-1,n-x);
+	}
+	if(n-y<=x-1){
+		rank+=min(x-1,n-y);
+	}
+	int left = abs(y-1-n+x);
+	return rank+left;
+}
 int main(){
+	int t;
+	cin>>t;
+	while(t--){
+		int n,x,y;
+		cin>>n>>x>>y;
+		cout<<best(n,x,y)<<" "<<worst(n,x,y)<<endl;
+	}
 	return 0;
 }

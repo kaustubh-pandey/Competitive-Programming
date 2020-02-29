@@ -13,5 +13,25 @@
 using namespace std;
 
 int main(){
+	int n;
+	cin>>n;
+	int a[n];
+	fo(i,n){
+		cin>>a[i];
+	}
+	Fo(i,1,n-1){
+		if(a[i-1]>a[i] && a[i]<a[i+1]){
+			if(a[i-1]<a[i+1]){
+				a[i-1]=a[i];
+			}
+			else{
+				a[i+1]=a[i];
+			}
+		}
+	}
+	fo(i,n){
+		cout<<a[i]<<" ";
+	}
+	cout<<endl;
 	return 0;
 }

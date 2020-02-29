@@ -13,5 +13,35 @@
 using namespace std;
 
 int main(){
+	int n;
+	cin>>n;
+	int a[n];
+	int v[n];
+	fo(i,n){
+		cin>>a[i];
+	}
+	fo(i,n){
+		cin>>v[i];
+	}
+	ll res=0;
+	fo(i,n){
+		Fo(j,i+1,n){
+			ll xi = min(a[i],a[j]);
+			ll xj=max(a[i],a[j]);
+			ll vi,vj;
+			if(xi == a[i]){
+				vi = v[i];
+				vj=v[j];
+			}
+			else{
+				vi = v[j];
+				vj=v[i];
+			}
+			if((vj-vi==0) || ((double)(xj-xi)/(vj-vi)>0)){
+				res+=abs(xj-xi);
+			}
+		}
+	}
+	cout<<res<<endl;
 	return 0;
 }
