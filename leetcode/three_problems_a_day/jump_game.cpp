@@ -1,4 +1,5 @@
-class Solution {
+//O(n^2) bottom up DP
+/*class Solution {
 public:
     bool canJump(vector<int>& nums) {
         int n = nums.size();
@@ -17,5 +18,22 @@ public:
             }
         }
         return dp[n-1];
+    }
+};*/
+//O(n) greedy
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int n = nums.size();
+        if(n==0){
+            return true;
+        }
+        int curr_idx = n-1;
+        for(int i = n-2;i>=0;i--){
+            if(nums[i]+i >= curr_idx){
+                curr_idx = i;
+            }
+        }
+        return curr_idx == 0;
     }
 };
