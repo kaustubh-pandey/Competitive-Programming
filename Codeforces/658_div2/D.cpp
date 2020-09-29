@@ -41,42 +41,7 @@ int main(){
 	int t;
 	cin>>t;
 	while(t--){
-		int n;
-		cin>>n;
-		int a[2*n];
-		fo(i,2*n){
-			cin>>a[i];	
-		}
-		vector<int> b,c;
-		b.pb(a[0]);
-		int prev = a[0];
-		int flag=0;
-		Fo(i,1,2*n){
-			if(a[i]<prev){
-				if(flag){
-					c.pb(a[i]);	
-				}
-				else{
-					b.pb(a[i]);	
-				}	
-			}
-			else{
-				if(flag){
-					b.pb(a[i]);	
-				}
-				else{
-					c.pb(a[i]);	
-				}
-				flag = 1-flag;	
-			}
-			prev=a[i];	
-		}
-		if(b.size()==c.size()){
-			cout<<"YES"<<endl;	
-		}
-		else{
-			cout<<"NO"<<endl;	
-		}			
+		
 	}
 	return 0;
 }
