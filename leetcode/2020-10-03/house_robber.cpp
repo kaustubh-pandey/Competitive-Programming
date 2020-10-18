@@ -16,7 +16,7 @@
 #define Endl "\n"
 #define trace(x) cerr<<#x<<": "<<x<<" "<<endl;
 using namespace std;
-const int MOD=998244353;
+const int MOD=1000000007;
 void print(){cout <<endl;}
 template <typename T, typename... Types> 
 void print(T var1, Types... var2){cout << var1 << " " ;print(var2...) ;}
@@ -30,49 +30,42 @@ void printarr(T a[],int n){ for(int i=0;i<n;i++){ cout<<a[i]<<" ";} cout<<endl;}
 //const int N=2e5;
 //int arr[N+1];
 
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+       int n = nums.size();
+        if(n==0){
+            return 0;
+        }
+        else if(n==1){
+            return nums[0];
+        }
+        else if(n==2){
+            return max(nums[0],nums[1]);
+        }
+        int dp[n];
+        memset(dp,0,sizeof(dp[0])*n);
+        dp[0]=nums[0];
+        dp[1]=nums[1];
+        for(int i=2;i<n;i++){
+            dp[i] = max(dp[i-2],(i>=3)?dp[i-3]:0) + nums[i];
+        }
+        return max(dp[n-1],dp[n-2]); 
+    }
+};
 int main(){
-	int n,q;
-	cin>>n>>q;
-	//n--;
-	vector< pair<int,int> > v;
-	fo(i,q){
-		int a,b;
-		cin>>a>>b;
-		v.pb(mp(a,b));	
-	}
-	sort(v.begin(),v.end());
-	ll dp[n+2];
-	memset(dp,0,sizeof(dp[0])*(n+2));
-	dp[0]=1;
-	dp[1]=-1;
-	//printarr(dp,n+1);
-	//for(int i=1;i<=n;i++){
-		//for(auto x:v){
-			//if(x.F>i){break;}
-			//for(int j=x.F;j<=min(x.S,i);j++){
-				//dp[i] = (dp[i] +  dp[i-j])%MOD;
-			//}	
-		//}	
-	//}
-	for(int i=0;i<n;i++){
-		if(i>=1){dp[i]=(dp[i]+dp[i-1])%MOD;}
-		for(auto x:v){
-			if(i+x.F<n){
-				dp[i+x.F] = (dp[i+x.F] + dp[i])%MOD;	
-			}
-			if(i+x.S+1<n){
-				dp[i+x.S+1] = (dp[i+x.S+1] - dp[i])%MOD;
-				if(dp[i+x.S+1]<0){dp[i+x.S+1]+=MOD;}	
-			}
-		}
-		//printarr(dp,n);	
-	}
-	
-	//printarr(dp,n+1);
-	cout<<dp[n-1]<<endl;
-	return 0;
+    Solution sol;
+    vector<int> nums;
+    int n;
+    cin>>n;
+    int d;
+    fo(i,n){
+        cin>>d;
+        nums.pb(d);
+    }
+    cout<<sol.rob(nums)<<endl;
+    return 0;
 }
-
 
 
 

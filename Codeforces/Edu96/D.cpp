@@ -16,7 +16,7 @@
 #define Endl "\n"
 #define trace(x) cerr<<#x<<": "<<x<<" "<<endl;
 using namespace std;
-const int MOD=998244353;
+const int MOD=1000000007;
 void print(){cout <<endl;}
 template <typename T, typename... Types> 
 void print(T var1, Types... var2){cout << var1 << " " ;print(var2...) ;}
@@ -30,46 +30,61 @@ void printarr(T a[],int n){ for(int i=0;i<n;i++){ cout<<a[i]<<" ";} cout<<endl;}
 //const int N=2e5;
 //int arr[N+1];
 
+ 
 int main(){
-	int n,q;
-	cin>>n>>q;
-	//n--;
-	vector< pair<int,int> > v;
-	fo(i,q){
-		int a,b;
-		cin>>a>>b;
-		v.pb(mp(a,b));	
-	}
-	sort(v.begin(),v.end());
-	ll dp[n+2];
-	memset(dp,0,sizeof(dp[0])*(n+2));
-	dp[0]=1;
-	dp[1]=-1;
-	//printarr(dp,n+1);
-	//for(int i=1;i<=n;i++){
-		//for(auto x:v){
-			//if(x.F>i){break;}
-			//for(int j=x.F;j<=min(x.S,i);j++){
-				//dp[i] = (dp[i] +  dp[i-j])%MOD;
-			//}	
-		//}	
-	//}
-	for(int i=0;i<n;i++){
-		if(i>=1){dp[i]=(dp[i]+dp[i-1])%MOD;}
-		for(auto x:v){
-			if(i+x.F<n){
-				dp[i+x.F] = (dp[i+x.F] + dp[i])%MOD;	
+	// ios::sync_with_stdio(false);
+	// cin.tie(0);
+	int t=1;
+	cin>>t;
+	while(t--){
+		int n;
+		cin>>n;
+		string s;
+		cin>>s;
+		int operation=0;
+		fo(i,n){
+			if(s[i]=='2'){
+				continue;
 			}
-			if(i+x.S+1<n){
-				dp[i+x.S+1] = (dp[i+x.S+1] - dp[i])%MOD;
-				if(dp[i+x.S+1]<0){dp[i+x.S+1]+=MOD;}	
+			//cout<<s<<endl;
+			if(i<n-2){
+				if(s[i]==s[i+1] && s[i+1]==s[i+2]){
+					int j=i;
+					char val = s[i];
+					while(j<n && val==s[j]){
+						s[j]='2';
+						j++;
+					}
+					operation++;
+					i = j-1;
+				}
+				else{
+					s[i]='2';
+					s[i+1]='2';
+					operation++;
+					i++;
+				}
+			}
+			else{
+				if(i==n-2){
+					s[i]='2';
+					s[i+1]='2';
+				}
+				else if(i==n-1){
+					s[i]='2';
+				}
+				operation++;
+				break;
 			}
 		}
-		//printarr(dp,n);	
+		//cout<<s<<endl;
+		fo(i,n){
+			if(s[i]!='2'){
+				operation++;
+			}
+		}
+		cout<<operation<<endl;			
 	}
-	
-	//printarr(dp,n+1);
-	cout<<dp[n-1]<<endl;
 	return 0;
 }
 

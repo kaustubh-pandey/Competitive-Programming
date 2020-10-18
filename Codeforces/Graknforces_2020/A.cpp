@@ -16,7 +16,7 @@
 #define Endl "\n"
 #define trace(x) cerr<<#x<<": "<<x<<" "<<endl;
 using namespace std;
-const int MOD=998244353;
+const int MOD=1000000007;
 void print(){cout <<endl;}
 template <typename T, typename... Types> 
 void print(T var1, Types... var2){cout << var1 << " " ;print(var2...) ;}
@@ -30,46 +30,53 @@ void printarr(T a[],int n){ for(int i=0;i<n;i++){ cout<<a[i]<<" ";} cout<<endl;}
 //const int N=2e5;
 //int arr[N+1];
 
+ 
 int main(){
-	int n,q;
-	cin>>n>>q;
-	//n--;
-	vector< pair<int,int> > v;
-	fo(i,q){
-		int a,b;
-		cin>>a>>b;
-		v.pb(mp(a,b));	
-	}
-	sort(v.begin(),v.end());
-	ll dp[n+2];
-	memset(dp,0,sizeof(dp[0])*(n+2));
-	dp[0]=1;
-	dp[1]=-1;
-	//printarr(dp,n+1);
-	//for(int i=1;i<=n;i++){
-		//for(auto x:v){
-			//if(x.F>i){break;}
-			//for(int j=x.F;j<=min(x.S,i);j++){
-				//dp[i] = (dp[i] +  dp[i-j])%MOD;
-			//}	
-		//}	
-	//}
-	for(int i=0;i<n;i++){
-		if(i>=1){dp[i]=(dp[i]+dp[i-1])%MOD;}
-		for(auto x:v){
-			if(i+x.F<n){
-				dp[i+x.F] = (dp[i+x.F] + dp[i])%MOD;	
-			}
-			if(i+x.S+1<n){
-				dp[i+x.S+1] = (dp[i+x.S+1] - dp[i])%MOD;
-				if(dp[i+x.S+1]<0){dp[i+x.S+1]+=MOD;}	
-			}
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	int t=1;
+	cin>>t;
+	while(t--){
+		int n;
+		cin>>n;
+		int a[n];
+		int b[n];
+		int c[n];
+		fo(i,n){cin>>a[i];}
+		fo(i,n){cin>>b[i];}
+		fo(i,n){cin>>c[i];}
+		vector<int> res;
+		int first = a[0];
+		int last;
+		if(a[n-1]!=first){
+			last = a[n-1];	
 		}
-		//printarr(dp,n);	
+		else if(b[n-1]!=first){
+			last = b[n-1];
+		}
+		res.pb(first);
+		Fo(i,1,n-2){
+			if(a[i]!=first){
+				res.pb(a[i]);
+				first = a[i];	
+			}
+			else if(b[i]!=first){
+				res.pb(b[i]);
+				first=b[i];	
+			}	
+		}
+		if(first!=a[n-2] && last!=a[n-2]){
+			res.pb(a[n-2]);	
+		}
+		else if(first!=b[n-2] && last!=b[n-2]){
+			res.pb(b[n-2]);	
+		}
+		else{
+			res.pb(c[n-2]);	
+		}
+		res.pb(last);
+		printvec(res);			
 	}
-	
-	//printarr(dp,n+1);
-	cout<<dp[n-1]<<endl;
 	return 0;
 }
 

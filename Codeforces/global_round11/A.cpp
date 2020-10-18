@@ -16,7 +16,7 @@
 #define Endl "\n"
 #define trace(x) cerr<<#x<<": "<<x<<" "<<endl;
 using namespace std;
-const int MOD=998244353;
+const int MOD=1000000007;
 void print(){cout <<endl;}
 template <typename T, typename... Types> 
 void print(T var1, Types... var2){cout << var1 << " " ;print(var2...) ;}
@@ -30,47 +30,51 @@ void printarr(T a[],int n){ for(int i=0;i<n;i++){ cout<<a[i]<<" ";} cout<<endl;}
 //const int N=2e5;
 //int arr[N+1];
 
+
 int main(){
-	int n,q;
-	cin>>n>>q;
-	//n--;
-	vector< pair<int,int> > v;
-	fo(i,q){
-		int a,b;
-		cin>>a>>b;
-		v.pb(mp(a,b));	
-	}
-	sort(v.begin(),v.end());
-	ll dp[n+2];
-	memset(dp,0,sizeof(dp[0])*(n+2));
-	dp[0]=1;
-	dp[1]=-1;
-	//printarr(dp,n+1);
-	//for(int i=1;i<=n;i++){
-		//for(auto x:v){
-			//if(x.F>i){break;}
-			//for(int j=x.F;j<=min(x.S,i);j++){
-				//dp[i] = (dp[i] +  dp[i-j])%MOD;
-			//}	
-		//}	
-	//}
-	for(int i=0;i<n;i++){
-		if(i>=1){dp[i]=(dp[i]+dp[i-1])%MOD;}
-		for(auto x:v){
-			if(i+x.F<n){
-				dp[i+x.F] = (dp[i+x.F] + dp[i])%MOD;	
-			}
-			if(i+x.S+1<n){
-				dp[i+x.S+1] = (dp[i+x.S+1] - dp[i])%MOD;
-				if(dp[i+x.S+1]<0){dp[i+x.S+1]+=MOD;}	
-			}
-		}
-		//printarr(dp,n);	
-	}
-	
-	//printarr(dp,n+1);
-	cout<<dp[n-1]<<endl;
-	return 0;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int t=1;
+    cin>>t;
+    while(t--){
+        int n; 
+        cin>>n;
+        vector<int> a(n,0);
+        int sum_pos=0;
+        int sum_neg=0;
+        int sum=0;
+        fo(i,n){
+            cin>>a[i];
+            if(a[i]>0){
+                sum_pos+=a[i];
+            }
+            else if(a[i]<0){
+                sum_neg+=a[i];
+            }
+            sum+=a[i];
+        }
+        int flag=0;
+        if(sum==0){
+            flag=1;
+        }
+        else if(sum_pos>abs(sum_neg)){
+            sort(a.rbegin(),a.rend());
+        }
+        else if(abs(sum_neg)>sum_pos){
+            sort(a.begin(),a.end());
+        }
+        else{
+            flag=1;
+        }
+        if(flag){
+            cout<<"NO"<<endl;
+        }
+        else{
+            cout<<"YES"<<endl;
+            printvec(a);
+        }                        
+    }
+    return 0;
 }
 
 
