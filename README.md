@@ -82,3 +82,13 @@ For MacOS:
 }
 
 ```
+
+Add keybindings:
+VSCode
+F1: Switch to editor
+F2: Switch to terminal
+F9: Run build task
+Ctrl+F9: Run build task using code runner using input file
+Geany:
+Same as vscode except Ctrl+F9
+
