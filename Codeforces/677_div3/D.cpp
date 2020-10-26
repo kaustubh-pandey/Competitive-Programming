@@ -32,14 +32,49 @@ void printarr(T a[],int n){ for(int i=0;i<n;i++){ cout<<a[i]<<" ";} cout<<endl;}
 //const int N=2e5;
 //int arr[N+1];
 
-
+bool allSame(int a[],int n){
+    fo(i,n-1){
+        if(a[i]!=a[i+1]){
+            return false;
+        }
+    }
+    return true;
+}
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(0);
     int t=1;
     cin>>t;
     while(t--){
-                    
+       int n;
+       cin>>n;
+       int a[n];
+       fo(i,n){
+           cin>>a[i];
+       }            
+       if(allSame(a,n)){
+           cout<<"NO"<<Endl;
+       }
+       else{
+           cout<<"YES"<<endl;
+           int root1 = a[0];
+           int root2=-1;
+           fo(i,n){
+               if(a[i]!=root1){
+                   root2 = i;
+                   break;
+               }
+           }
+           Fo(i,1,n){
+               if(a[i]!=root1){
+                   cout<<1<<" "<<i+1<<endl;
+               }  
+               else{
+                   cout<<root2+1<<" "<<i+1<<endl;
+               }    
+           }
+       }
+       
     }
     return 0;
 }
@@ -49,5 +84,4 @@ int main(){
 
 
 
-/*NOTE: Take MOD after sorting and not before sorting!
-: While casting to long long 1LL*a*b works while a*b*1LL doesn't*/
+/*NOTE: Take MOD after sorting and not before sorting!*/

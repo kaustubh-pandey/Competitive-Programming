@@ -39,7 +39,7 @@ int main(){
     int t=1;
     cin>>t;
     while(t--){
-                    
+                                 
     }
     return 0;
 }
@@ -49,5 +49,4 @@ int main(){
 
 
 
-/*NOTE: Take MOD after sorting and not before sorting!
-: While casting to long long 1LL*a*b works while a*b*1LL doesn't*/
+/*NOTE: Take MOD after sorting and not before sorting!*/

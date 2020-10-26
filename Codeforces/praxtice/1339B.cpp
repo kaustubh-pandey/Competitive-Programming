@@ -39,7 +39,25 @@ int main(){
     int t=1;
     cin>>t;
     while(t--){
-                    
+        int n;
+        cin>>n;
+        int a[n];
+        fo(i,n){
+            cin>>a[i];
+        }
+        sort(a,a+n);
+        vector<int> res;
+        fo(i,n/2){
+            res.pb(a[i]);
+            res.pb(a[n-i-1]);
+        }
+        if(n%2){
+            res.pb(a[n/2]);
+        }       
+        rfo(i,(int) res.size()){
+            cout<<res[i]<<" ";
+        }
+        cout<<endl;
     }
     return 0;
 }
@@ -49,5 +67,4 @@ int main(){
 
 
 
-/*NOTE: Take MOD after sorting and not before sorting!
-: While casting to long long 1LL*a*b works while a*b*1LL doesn't*/
+/*NOTE: Take MOD after sorting and not before sorting!*/

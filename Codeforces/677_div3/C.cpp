@@ -34,12 +34,44 @@ void printarr(T a[],int n){ for(int i=0;i<n;i++){ cout<<a[i]<<" ";} cout<<endl;}
 
 
 int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(0);
+    // ios::sync_with_stdio(false);
+    // cin.tie(0);
     int t=1;
     cin>>t;
     while(t--){
-                    
+        int n;
+        cin>>n;
+        int a[n];
+        fo(i,n){
+            cin>>a[i];
+        }
+        int maxm = 0;
+        int minm = INT_MAX;
+        int maxi=-1;
+        fo(i,n){
+            if(a[i]>maxm){
+                maxm = a[i];
+                maxi = i;
+            }
+            minm = min(minm,a[i]);
+        }    
+        //print(maxm,minm); 
+        if(maxm!=minm){
+            if(maxi<n-1 && a[maxi]==a[maxi+1] && (maxi==0||(maxi>0 && a[maxi-1]==a[maxi]))){
+                while(maxi+1<n && a[maxi]==a[maxi+1]){
+                    maxi++;
+                }
+            }
+            else if(maxi>0 && a[maxi]==a[maxi-1] && (maxi==n-1||(maxi<n-1 && a[maxi+1]==a[maxi]))){
+                while(maxi-1>=0 && a[maxi]==a[maxi-1]){
+                    maxi--;
+                }
+            }
+            cout<<maxi+1<<endl;
+        }
+        else{
+            cout<<-1<<endl;
+        }                
     }
     return 0;
 }
@@ -49,5 +81,4 @@ int main(){
 
 
 
-/*NOTE: Take MOD after sorting and not before sorting!
-: While casting to long long 1LL*a*b works while a*b*1LL doesn't*/
+/*NOTE: Take MOD after sorting and not before sorting!*/

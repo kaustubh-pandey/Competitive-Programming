@@ -39,7 +39,29 @@ int main(){
     int t=1;
     cin>>t;
     while(t--){
-                    
+        int n;
+        cin>>n;
+        int a[n];
+        fo(i,n){
+            cin>>a[i];
+        }             
+        int count=0;
+        int i=0;
+        while(i<n){
+            if(a[i]==1){
+                int j=i+1;
+                while(j<n && a[j]==0){
+                    j++;
+                }
+                if(j<n && a[j]==1){
+                    count+= j-i-1;
+                }
+                
+                i=j-1;
+            }
+            i++;
+        }    
+        cout<<count<<endl;        
     }
     return 0;
 }
@@ -49,5 +71,4 @@ int main(){
 
 
 
-/*NOTE: Take MOD after sorting and not before sorting!
-: While casting to long long 1LL*a*b works while a*b*1LL doesn't*/
+/*NOTE: Take MOD after sorting and not before sorting!*/

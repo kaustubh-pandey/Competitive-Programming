@@ -31,18 +31,71 @@ template <typename T>
 void printarr(T a[],int n){ for(int i=0;i<n;i++){ cout<<a[i]<<" ";} cout<<endl;}
 //const int N=2e5;
 //int arr[N+1];
-
-ll avg(int a[],int w){
-    ll sum=0;
-    fo(i,w){
-        sum+=a[i];
-    }
-    ll res = sum*(1.0L)/w;
-    return res;
+ll absl(ll a){
+    if(a>0){return a;}
+    return -a;
 }
 ll minl(ll a,ll b){
     if(a<b){return a;}
     return b;
+}
+int bsearch(int a[],int low,int high,int n,int x,int l,int r){
+    if(high>=low){
+        int mid = low+(high-low)/2;
+        // cout<<x<<" "<<a[mid]<<"  "<<mid<<endl;
+        
+        if(x-a[mid]==n-x+a[mid]){
+            return mid;
+        }
+        if(mid+1<=r && (x-a[mid]>=n-x+a[mid] && x-a[mid+1]<n-x+a[mid+1])){
+            return mid;
+        }
+        if(mid-1>=l && (x-a[mid-1]>=n-x+a[mid-1] && x-a[mid]<n-x+a[mid])){
+            return mid-1;
+        }
+        if(x-a[mid]<n-x+a[mid]){
+            return bsearch(a,low,mid-1,n,x,l,r);
+        }
+        else{
+            return bsearch(a,mid+1,high,n,x,l,r);
+        }
+    }
+    // cout<<high<<" "<<low<<"#"<<endl;
+    if(high<l){
+        return high;
+    }
+    if(low>r){
+        return low;
+    }
+    return high;
+}
+int bsearch2(int a[],int low,int high,int n,int x,int l,int r){
+    if(high>=low){
+        int mid = low+(high-low)/2;
+        if(a[mid]-x==n+x-a[mid]){
+            return mid;
+        }
+        if(mid+1<=high && (a[mid]-x<=n+x-a[mid] && a[mid+1]-x>n+x-a[mid+1])){
+            return mid;
+        }
+        if(mid-1>=l && (a[mid-1]-x<=n+x-a[mid-1] && a[mid]-x>n+x-a[mid])){
+            return mid-1;
+        }
+        if(a[mid]-x<n+x-a[mid]){
+            return bsearch2(a,mid+1,high,n,x,l,r);
+        }
+        else{
+            return bsearch2(a,low,mid-1,n,x,l,r);
+        }
+    }
+    // cout<<high<<" "<<low<<"#"<<endl;
+    if(high<l){
+        return high;
+    }
+    if(low>r){
+        return low;
+    }
+    return low;
 }
 int main(){
     int t;
@@ -51,29 +104,65 @@ int main(){
         int w,n;
         cin>>w>>n;
         int a[w];
-        vector<ll> vals;
         fo(i,w){
             cin>>a[i];
-            vals.pb(a[i]);
         }
-        ll average = avg(a,w);
-        vals.pb(average);vals.pb(average+1);
+        sort(a,a+w);
+        ll prefix[w];
+        prefix[0]=a[0];
+        Fo(i,1,w){
+            prefix[i] = prefix[i-1]+a[i];
+        }
         ll minm = LLONG_MAX;
-        for(int i=0;i<(int)vals.size();i++){
-            ll loc_sum=0;
-            for(int j=0;j<w;j++){
-                ll value=0;
-                if(vals[i]<a[j]){
-                    //print(a[j]-vals[i],((vals[i]-a[j])%n)+n,i,j);
-                    value = minl(a[j]-vals[i],((vals[i]-a[j])%n)+n);
+        for(int i=0;i<w;i++){
+            int pos = bsearch(a,0,i,n,a[i],0,i);
+            // cout<<"---------"<<endl;
+            int pos2 = bsearch2(a,i+1,w-1,n,a[i],i+1,w-1);
+            // cout<<"---------"<<endl;
+            // cout<<pos<<" "<<pos2<<endl;
+            ll val=0;
+            //pos+1 to i
+            if(pos<=i){
+                if(pos<0){
+                    val+=1LL*(i+1)*a[i] - (prefix[i]);
                 }
                 else{
-                    //print(vals[i]-a[j],((a[j]-vals[i])%n)+n,i,j);
-                    value = minl(vals[i]-a[j],((a[j]-vals[i])%n)+n);
+                    val+=1LL*(i-pos)*a[i] - (prefix[i]-prefix[pos]);
                 }
-                loc_sum+= value;
+                
             }
-            minm = minl(minm,loc_sum);
+            // cout<<val<<endl;
+            // 0 to pos
+            if(pos>=0){
+                if(pos>i){
+                    val+= 1LL*(i+1)*(n-a[i]) + prefix[i];
+                }
+                else{   
+                    val+= 1LL*(pos+1)*(n-a[i]) + prefix[pos];
+                }
+            }
+            // cout<<val<<endl;
+            //pos2+1 to w-1
+            if(pos2<=w-1){
+                if(pos2<i+1){
+                    val+= 1LL*(w-i-1)*(n+a[i]) -(prefix[w-1]-prefix[i]);
+                }
+                else{
+                    val+= 1LL*(w-pos2-1)*(n+a[i]) -(prefix[w-1]-prefix[pos2]);
+                }
+            }
+            // cout<<val<<endl;
+            //i+1 to pos2
+            if(pos2>=i+1){
+                if(pos2>w-1){
+                    val+= (prefix[w-1]-prefix[i])-1LL*(w-i-1)*a[i];
+                }
+                else{
+                    val+= (prefix[pos2]-prefix[i])-1LL*(pos2-i)*a[i];
+                }
+            }
+            // cout<<val<<endl;
+            minm = minl(minm,val);
         }
         cout<<"Case #"<<z<<": "<< minm<<endl;
     }

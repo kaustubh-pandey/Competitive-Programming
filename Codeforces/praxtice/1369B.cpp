@@ -39,7 +39,27 @@ int main(){
     int t=1;
     cin>>t;
     while(t--){
-                    
+          int n;
+          cin>>n;
+          string s;
+          cin>>s;
+          int left=0;
+          string pref="",suff="";
+          while(left<n && s[left]=='0'){
+              left++;
+              pref+= '0';
+          }
+          int right = n-1;
+          while(right>=0 && s[right]=='1'){
+              right--;
+              suff+= '1';
+          }
+          if(left>right){
+              cout<<s<<endl;
+          }
+          else{
+              cout<< pref+'0'+suff <<endl;
+          }
     }
     return 0;
 }
@@ -49,5 +69,4 @@ int main(){
 
 
 
-/*NOTE: Take MOD after sorting and not before sorting!
-: While casting to long long 1LL*a*b works while a*b*1LL doesn't*/
+/*NOTE: Take MOD after sorting and not before sorting!*/

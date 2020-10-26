@@ -29,7 +29,7 @@ template <typename T>
 void printvec(vector<T> v){ for(int i=0;i<(int)v.size();i++){ cout<<v[i]<<" ";} cout<<endl;}
 template <typename T>
 void printarr(T a[],int n){ for(int i=0;i<n;i++){ cout<<a[i]<<" ";} cout<<endl;}
-//const int N=2e5;
+const int N=1e5;
 //int arr[N+1];
 
 
@@ -37,9 +37,31 @@ int main(){
     ios::sync_with_stdio(false);
     cin.tie(0);
     int t=1;
-    cin>>t;
+    //cin>>t;
     while(t--){
-                    
+        int n;
+        cin>>n;
+        int seive[N+1];
+        memset(seive,0,sizeof(seive[0])*(N+1));
+        int count=1;
+        seive[2]=count;
+        count++;
+        for(int i=4;i<=N;i+=2){
+            seive[i]=seive[2];
+        }
+        for(int i=3;i<=N;i+=2){
+            if(seive[i]==0){
+                seive[i]=count;
+                count++;
+                for(int j=i*2;j<=N;j+=i){
+                    seive[j]=seive[i];
+                }
+            }
+        }
+        for(int i=2;i<=n;i++){
+            cout<<seive[i]<<" ";
+        }
+        cout<<endl;
     }
     return 0;
 }
@@ -49,5 +71,4 @@ int main(){
 
 
 
-/*NOTE: Take MOD after sorting and not before sorting!
-: While casting to long long 1LL*a*b works while a*b*1LL doesn't*/
+/*NOTE: Take MOD after sorting and not before sorting!*/
