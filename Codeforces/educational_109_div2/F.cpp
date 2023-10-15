@@ -15,6 +15,8 @@
 #define endl "\n"
 #define Endl "\n"
 #define trace(x) cerr<<#x<<": "<<x<<" "<<endl;
+#define TIK auto start = chrono::high_resolution_clock::now();
+#define TOK auto end = chrono::high_resolution_clock::now();double time_taken =chrono::duration_cast<chrono::nanoseconds>(end - start).count();time_taken *= 1e-9;cerr << "Time taken:" << fixed << time_taken << setprecision(9);cerr << " sec" << endl;
 using namespace std;
 const int MOD=1000000007;
 void print(){cout <<endl;}
@@ -30,66 +32,16 @@ void printarr(T a[],int n){ for(int i=0;i<n;i++){ cout<<a[i]<<" ";} cout<<endl;}
 //const int N=2e5;
 //int arr[N+1];
 
-bool check(pair<int,int> seg){
-	if(seg.S-seg.F>=1){
-		return true;
-	}
-	return false;
-} 
+
 int main(){
-	// ios::sync_with_stdio(false);
-	// cin.tie(0);
-	int t=1;
-	cin>>t;
-	while(t--){
-		int n;
-		cin>>n;
-		string s;
-		cin>>s;
-		int moves = 0;
-		vector< pair<int,int> > q;
-		int i=0;
-		while(i<n){
-			int j=i;
-			while(j<n && s[i]==s[j]){
-				j++;
-			}
-			q.pb(mp(i,j-1));
-			i=j;
-		}
-		int start=0;
-		int endi = q.size()-1;
-		while(start<=endi){
-			// cout<<q[start].F<<"  "<<q[start].S<<endl;
-			if(check(q[start])){
-				// cout<<"YES"<<endl;
-				moves++;
-				start++;
-			}
-			else{
-				// cout<<"NO"<<endl;
-				//find next block
-				int flag=0;
-				for(i=start;i<=endi;i++){
-					if(check(q[i])){
-						q[i] = mp(q[i].F,q[i].S-1);
-						start++;
-						moves++;
-						flag=1;
-						break;
-					}	
-				}
-				if(!flag){
-					// cout<<"LAST"<<endl;
-					endi--;
-					start++;
-					moves++;
-				}
-			}
-		}
-		cout<<moves<<endl;
-	}
-	return 0;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int t=1;
+    cin>>t;
+    while(t--){
+                                 
+    }
+    return 0;
 }
 
 
@@ -97,4 +49,4 @@ int main(){
 
 
 
-/*NOTE: Take MOD after sorting and not before sorting!*/
+/*NOTE: Take MOD after sorting and not before sorting!\n: While casting to long long 1LL*a*b works while a*b*1LL doesn't*/
